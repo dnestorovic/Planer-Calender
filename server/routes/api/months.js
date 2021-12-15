@@ -3,8 +3,8 @@ const router = express.Router();
 const controller = require('../../models/controller')
 
 
-router.get('/', controller.getAllTasks);
-router.get('/:orderNumber', controller.getByOrderNumber);
+router.get('/allTasks/:monthNumber', controller.getAllTasks);
+router.get('/dailyTasks/:orderNumber', controller.getByOrderNumber);
 router.post('/', controller.addTask);
 
 

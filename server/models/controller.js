@@ -5,9 +5,14 @@ const { Months } = require('./model');
 
 module.exports.getAllTasks = async (req, res, next) =>{
 
+    const monthNumber = req.params.monthNumber;
     try{
-        const allTasks = await Months.find({}).exec() 
-        res.status(200).json(allTasks);
+        const tasks = await Months.find({monthNumber: monthNumber}).exec();
+        if(tasks === null){
+            res.status(404).json();
+        }
+
+        res.status(200).json(tasks);
     }catch(error){
         next(error);
     }
@@ -17,7 +22,7 @@ module.exports.getByOrderNumber = async (req, res, next) =>{
 
     const orderNumber = req.params.orderNumber;
     try{
-        const tasks = await Months.findById({dayInMonth: orderNumber}).exec();
+        const tasks = await Months.find({dayInMonth: orderNumber}).exec();
         if(tasks === null){
             res.status(404).json();
         }
