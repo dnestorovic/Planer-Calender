@@ -4,12 +4,12 @@
   justify-content: space-around;
   align-items: center;
 
-  border: 2px solid gray;
+  border: 2px solid transparent;
   width: 250px;
   min-width: 250px;
   height: 30px;
 
-  background: gray;
+  background: $primary-blue;
   border-radius: 5px;
 
   > button {

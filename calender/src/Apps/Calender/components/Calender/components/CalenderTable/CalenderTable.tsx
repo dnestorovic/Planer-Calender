@@ -1,129 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {MonthDataModel} from "../../../../../../models/MonthDataModel";
+import DateTimeUtilities from "../../../../../../utilities/DateTimeUtilities";
 
 type CalenderTableProps = {
+    monthData: MonthDataModel[] | null;
     rootClass?: string;
 }
 
-const CalenderTable: React.FC<CalenderTableProps> = ({ rootClass }) => {
-    return (
+const CalenderTable: React.FC<CalenderTableProps> = ({ rootClass, monthData }) => {
+
+    const [startingDayOfMonth, setStartingDayOfMonth] = useState<number | null>(0);
+
+    useEffect(() => {
+        setStartingDayOfMonth(
+            monthData && monthData[0] && DateTimeUtilities.getStartingDayOfMonth(monthData[0].monthNumber, monthData[0].yearNumber)
+        )
+    }, [monthData]);
+
+
+    return monthData ? (
         <table className={[rootClass, 'ln-calender-table'].join(' ')}>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    2
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    4
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    6
-                </td>
-                <td>
-                    7
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    2
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    4
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    6
-                </td>
-                <td>
-                    7
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    2
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    4
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    6
-                </td>
-                <td>
-                    7
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    2
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    4
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    6
-                </td>
-                <td>
-                    7
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    2
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    4
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    6
-                </td>
-                <td>
-                    7
-                </td>
-            </tr>
+            <tbody>
+            <tr><td>{startingDayOfMonth}</td></tr>
+            </tbody>
         </table>
-    );
+    ) : <div>No data available</div>;
 };
 
 export default CalenderTable;

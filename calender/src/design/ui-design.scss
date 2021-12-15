@@ -1,6 +1,12 @@
-// app components design
+// apps design
 @import "/src/Apps/Calender/components/Banner/ln-banner";
 @import "/src/Apps/Calender/components/Calender/ln-calender";
 
+// app components design
+@import "/src/Apps/Calender/components/Calender/components/CalenderTable/ln-calender-table";
+
 // global components design
 @import "/src/components/Navigation/ln-navigation";
+
+// colors
+@import "/src/design/colors";
