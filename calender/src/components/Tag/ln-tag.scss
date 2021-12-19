@@ -1,0 +1,50 @@
+@import "src/design/colors";
+.ln-tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 0 5px 5px;
+
+  &.lnm-basic {
+    background: $primary-green;
+  }
+
+  &.lnm-recommended {
+    background: $primary-blue;
+  }
+
+  &.lnm-important {
+    background: $primary-orange;
+  }
+
+  &.lnm-very-important {
+    background: $primary-red;
+  }
+
+  .lnp-close-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    border: none;
+    background: none;
+
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  .lnp-close-button :hover {
+    transform: scale(1.1, 1.1);
+    color: white;
+  }
+
+}
