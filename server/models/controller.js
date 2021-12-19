@@ -2,6 +2,20 @@ const { Mongoose } = require('mongoose');
 const mongoose = require('mongoose');
 const { Months } = require('./model');
 
+module.exports.getById = async (req, res, next) =>{
+
+    const id = req.params.id;
+    try{
+        const tasks = await Months.findById(id).exec();
+        if(tasks === null){
+            res.status(404).json();
+        }
+
+        res.status(200).json(tasks);
+    }catch(error){
+        next(error);
+    }
+}
 
 module.exports.getAllTasks = async (req, res, next) =>{
 
@@ -20,9 +34,12 @@ module.exports.getAllTasks = async (req, res, next) =>{
 
 module.exports.getByOrderNumber = async (req, res, next) =>{
 
-    const orderNumber = req.params.orderNumber;
+    const dayInMonth = req.params.orderNumber;
+    const monthNumber = req.params.monthNumber;
+    const yearNumber = req.params.yearNumber;
     try{
-        const tasks = await Months.find({dayInMonth: orderNumber}).exec();
+        const tasks = await Months.find({dayNumber: dayInMonth, monthNumber: monthNumber,
+             yearNumber: yearNumber}).exec();
         if(tasks === null){
             res.status(404).json();
         }
@@ -38,35 +55,43 @@ module.exports.addTask = async (req, res, next) => {
 
     const {yearNumber, monthNumber, dayNumber, dayInMonth, tasks} = req.body;
 
-    try{
-        tasksArray = [];
-        tasks.forEach(element => {
-            const newTask = {
-                taskId: new mongoose.Types.ObjectId(),
-                shortDescription: element.shortDescription,
-                description: element.description,
-                importance : element.importance,
-                place: element.place,
-                time: element.time
-            };
-            tasksArray.push(newTask);
-        });
-        
+    try{       
         const newMonth = new Months({
             _id: new mongoose.Types.ObjectId(),
             yearNumber: yearNumber,
             monthNumber: monthNumber,
             dayNumber: dayNumber,
-            dayInMonth: dayInMonth,
-            tasks: tasksArray
+            tasks: tasks
         });
+        
         
         await newMonth.save();
         res.status(201).json({'Message' : "New Task added"})
     }catch(error){
         next(error);
     }
+}
+
+module.exports.deleteByDate = async (req, res, next) =>{
+
+    const id = req.params.id;
+    try{
+        await Months.deleteOne({_id: id});
+        res.status(200).json();
+    }catch(error){
+        next(error);
+    }
+}
 
 
+module.exports.updateTask = async (req, res, next) =>{
 
+    const id = req.params.id;
+    const {yearNumber, monthNumber, dayNumber, tasks} = req.body;
+    try{
+        await Months.updateOne({_id : id}, {$set: {dayNumber: dayNumber, monthNumber: monthNumber}});
+        res.status(200).json();
+    }catch(error){
+        next(error);
+    }
 }
