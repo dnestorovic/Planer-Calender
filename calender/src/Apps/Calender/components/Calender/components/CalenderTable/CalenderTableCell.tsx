@@ -6,6 +6,7 @@ import { MonthDataModel } from '../../../../../../models/MonthDataModel';
 import Tag from '../../../../../../components/Tag/Tag';
 import DateTimeUtilities from '../../../../../../utilities/DateTimeUtilities';
 import { Droppable } from 'react-beautiful-dnd';
+import DeleteTaskModal from '../modals/DeleteTaskModal';
 
 type CalenderCellProps = {
     isEmptyCell?: boolean;
@@ -15,6 +16,13 @@ type CalenderCellProps = {
     selectedItem?: MonthDataModel | null;
 };
 
+enum TaskActions {
+    Add,
+    Edit,
+    Delete,
+    Sort
+}
+
 const CalenderTableCell: React.FC<CalenderCellProps> = ({
     dayInMonth,
     month,
@@ -23,6 +31,19 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
     selectedItem
 }) => {
     const [dailyTasks, setDailyTasks] = useState<MonthDataModel[]>([]);
+    const [taskAction, setTaskAction] = useState<{ action?: TaskActions | null; taskId?: string | null }>({
+        action: null,
+        taskId: null
+    });
+
+    const cancelModal = () => {
+        setTaskAction({ action: null, taskId: null });
+    };
+
+    const refresh = () => {
+        cancelModal();
+        fetch();
+    };
 
     const fetch = () => {
         if (!isEmptyCell && dayInMonth) {
@@ -36,7 +57,7 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
     };
 
     const deleteTag = (id: string) => {
-        alert(id);
+        setTaskAction({ action: TaskActions.Delete, taskId: id });
     };
 
     const renderTasks = () => {
@@ -80,6 +101,9 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
                     <FontAwesomeIcon icon={faCalendarPlus} />
                 </button>
             </div>
+            {taskAction?.action === TaskActions.Delete ? (
+                <DeleteTaskModal taskId={taskAction?.taskId || ''} onCancel={cancelModal} onDelete={refresh} />
+            ) : null}
         </div>
     ) : (
         <div>EMPTY HERE</div>
