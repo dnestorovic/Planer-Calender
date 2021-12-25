@@ -8,6 +8,7 @@ type ModalDialogProps = {
     cancelText?: string;
     onSubmit?: () => void;
     onCancel?: () => void;
+    readonly?: boolean;
 };
 
 const ModalDialog: React.FC<ModalDialogProps> = ({
@@ -17,7 +18,8 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
     cancelText,
     onSubmit,
     onCancel,
-    children
+    children,
+    readonly = false
 }) => {
     const domRoot = document.getElementById('portal');
     const modalRoot = document.createElement('div');
@@ -39,9 +41,11 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
                         <button onClick={onCancel}>
                             <span>{cancelText || 'Cancel'}</span>
                         </button>
-                        <button onClick={onSubmit} className="lnt-primary">
-                            <span>{submitText || 'Submit'}</span>
-                        </button>
+                        {!readonly && (
+                            <button onClick={onSubmit} className="lnt-primary">
+                                <span>{submitText || 'Submit'}</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

@@ -6,7 +6,12 @@ import { MonthDataModel } from '../../../../../../models/MonthDataModel';
 import Tag from '../../../../../../components/Tag/Tag';
 import DateTimeUtilities from '../../../../../../utilities/DateTimeUtilities';
 import { Droppable } from 'react-beautiful-dnd';
-import DeleteTaskModal from '../modals/DeleteTaskModal';
+import { SortDirection } from '../../../../../../models/GlobalModels';
+import ArrayUtility from '../../../../../../utilities/ArrayUtility';
+import SortTasksModal from '../modals/SortTasksModal/SortTasksModal';
+import AddTaskModal from '../modals/AddTaskModal/AddTaskModal';
+import DeleteTaskModal from '../modals/DeleteTaskModal/DeleteTaskModal';
+import ShowTasksModal from '../modals/ShowTasksModal/ShowTasksModal';
 
 type CalenderCellProps = {
     isEmptyCell?: boolean;
@@ -20,7 +25,8 @@ enum TaskActions {
     Add,
     Edit,
     Delete,
-    Sort
+    Sort,
+    Show
 }
 
 const CalenderTableCell: React.FC<CalenderCellProps> = ({
@@ -45,6 +51,11 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
         fetch();
     };
 
+    const handleSort = (attribute: string, direction: SortDirection) => {
+        setDailyTasks(ArrayUtility.sort(dailyTasks, direction, attribute));
+        setTaskAction({ action: null, taskId: null });
+    };
+
     const fetch = () => {
         if (!isEmptyCell && dayInMonth) {
             TasksService.getTaskForDay(dayInMonth, month, year)
@@ -56,18 +67,30 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
         }
     };
 
-    const deleteTag = (id: string) => {
+    const addTask = () => {
+        setTaskAction({ action: TaskActions.Add });
+    };
+
+    const deleteTask = (id: string) => {
         setTaskAction({ action: TaskActions.Delete, taskId: id });
+    };
+
+    const sortTasks = () => {
+        setTaskAction({ action: TaskActions.Sort });
+    };
+
+    const showTasks = () => {
+        setTaskAction({ action: TaskActions.Show });
     };
 
     const renderTasks = () => {
         return dailyTasks.map((task, index) => (
             <Tag
                 key={index}
-                tagContent={task.tasks.shortDescription}
-                tagId={task._id}
-                priority={task.tasks.importance}
-                onTagClose={deleteTag}
+                tagContent={task?.tasks?.shortDescription || ''}
+                tagId={task._id || ''}
+                priority={task?.tasks?.importance || 1}
+                onTagClose={deleteTask}
             />
         ));
     };
@@ -92,22 +115,25 @@ const CalenderTableCell: React.FC<CalenderCellProps> = ({
             </Droppable>
             <div className="lnp-cell-footer">
                 <button className={'lnm-meeting-icon'}>
-                    <FontAwesomeIcon icon={faUserTie} />
+                    <FontAwesomeIcon icon={faUserTie} onClick={showTasks} />
                 </button>
-                <button className={'lnm-sort-icon'}>
+                <button className={'lnm-sort-icon'} onClick={sortTasks}>
                     <FontAwesomeIcon icon={faSort} />
                 </button>
-                <button className={'lnm-add-icon'}>
+                <button className={'lnm-add-icon'} onClick={addTask}>
                     <FontAwesomeIcon icon={faCalendarPlus} />
                 </button>
             </div>
-            {taskAction?.action === TaskActions.Delete ? (
+            {taskAction?.action === TaskActions.Delete && (
                 <DeleteTaskModal taskId={taskAction?.taskId || ''} onCancel={cancelModal} onDelete={refresh} />
-            ) : null}
+            )}
+            {taskAction?.action === TaskActions.Add && (
+                <AddTaskModal day={dayInMonth} month={month} year={year} onCancel={cancelModal} onSave={refresh} />
+            )}
+            {taskAction?.action === TaskActions.Sort && <SortTasksModal onSort={handleSort} onCancel={cancelModal} />}
+            {taskAction?.action === TaskActions.Show && <ShowTasksModal tasks={dailyTasks} onClose={cancelModal} />}
         </div>
-    ) : (
-        <div>EMPTY HERE</div>
-    );
+    ) : null;
 };
 
 export default CalenderTableCell;

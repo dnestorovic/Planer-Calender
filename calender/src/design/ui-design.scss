@@ -4,6 +4,9 @@
 
 // app components design
 @import "/src/Apps/Calender/components/Calender/components/CalenderTable/ln-calender-table";
+@import "src/Apps/Calender/components/Calender/components/modals/AddTaskModal/ln-add-task";
+@import "src/Apps/Calender/components/Calender/components/modals/SortTasksModal/ln-sort-tasks";
+@import "src/Apps/Calender/components/Calender/components/modals/ShowTasksModal/ln-show-tasks";
 
 // global components design
 @import "/src/components/Navigation/ln-navigation";

@@ -27,15 +27,17 @@ export const getDayFromNumber = (day: number): WeekDays => {
 export const getStartingDayOfMonth = (month: number, year: number): number => {
     // add plus 1 to month because I calculate months from 0-11 and Date works with format from 1-12
     // return minus one day to get day in range 0-6 not in range 1-7 as getDay() returns
-    return new Date('' + (month + 1) + '/' + 1 + '/' + year).getDay() - 1;
+    return new Date('' + (month + 1) + '/' + 1 + '/' + year).getDay() - 1 < 0
+        ? 6
+        : new Date('' + (month + 1) + '/' + 1 + '/' + year).getDay() - 1;
 };
 
 export const getEndingDayOfMonth = (month: number, year: number): number => {
-    return new Date(year, month + 1, 0).getDay() - 1;
+    return new Date(year, month + 1, 0).getDay() - 1 < 0 ? 8 : new Date(year, month + 1, 0).getDay() - 1;
 };
 
 export const createDateString = (day: number, month: number, year: number): string => {
-    return day + ' . ' + month + ' . ' + year;
+    return day + ' . ' + (month + 1) + ' . ' + year;
 };
 
 const DateTimeUtilities = {

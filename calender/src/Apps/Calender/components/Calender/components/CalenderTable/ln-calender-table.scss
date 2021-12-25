@@ -44,6 +44,7 @@
       flex-grow: 1;
       padding-left: 5px;
       padding-right: 5px;
+      margin-right: 5px;
 
       display: flex;
       flex-direction: row;
@@ -53,6 +54,17 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        background: none;
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $primary-orange;
+        border-radius: 5px;
+      }
 
       > * {
         margin: 3px;
