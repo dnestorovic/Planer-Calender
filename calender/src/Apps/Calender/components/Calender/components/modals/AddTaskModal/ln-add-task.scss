@@ -1,0 +1,71 @@
+.lnc-add-task {
+
+
+  .lnp-input-field {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+
+    margin-top: 15px;
+    margin-left: 5px;
+
+    span {
+      font-size: 15px;
+      color: white;
+
+      min-width: 150px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 200px;
+      min-width: 150px;
+      background: none;
+      border: none;
+      border-bottom: 1px solid $primary-orange;
+      color: white;
+    }
+
+    input::placeholder{
+      color: white;
+    }
+
+    textarea {
+      width: 202px;
+      min-width: 152px;
+      background: none;
+
+      border: 1px solid $primary-orange;
+
+      height: 100px;
+      min-height: 80px;
+      resize: none;
+    }
+
+    textarea::placeholder {
+      color: white;
+    }
+
+    &.lnm-time {
+      input {
+        width: 40px;
+        min-width: 40px;
+        border: none;
+        border-bottom: 1px solid $primary-orange;
+        text-align: center;
+        color: white;
+      }
+
+      .lnm-separator {
+        width: fit-content;
+        min-width: fit-content;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+
+    }
+
+  }
+
+
+}
