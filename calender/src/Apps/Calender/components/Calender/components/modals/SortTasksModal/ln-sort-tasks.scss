@@ -1,0 +1,43 @@
+.ln-sort-tasks {
+
+  .lnp-input-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 25px;
+    margin-left: 5px;
+
+    span {
+      font-size: 15px;
+      color: white;
+
+      min-width: 150px;
+      font-weight: 600;
+    }
+
+    .lnp-select {
+      width: 150px;
+      min-width: 150px;
+
+      color: white;
+      background: $primary-blue;
+      font-size: 16px;
+
+      border: none;
+      border-bottom: 1px solid $primary-orange;
+    }
+
+    .lnp-select:focus {
+      border: 1px solid white;
+
+      option {
+        color: white;
+        font-size: 16px;
+      }
+    }
+
+  }
+
+
+}
