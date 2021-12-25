@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ModalDialog from '../../../../../../components/Modals/ModalDialog';
+import ModalDialog from '../../../../../../../components/Modals/ModalDialog';
 import ReactLoader from 'react-loader';
-import TasksService from '../../../../../../services/TasksService';
+import TasksService from '../../../../../../../services/TasksService';
 
 type DeleteTaskProps = {
     taskId: string;
@@ -31,7 +31,7 @@ const DeleteTaskModal: React.FC<DeleteTaskProps> = ({ onCancel, onDelete, taskId
     return isDeleting ? (
         <ReactLoader loaded={!isDeleting} className="react-spinner-loader-swing" />
     ) : (
-        <ModalDialog header="Delete meeting?" onCancel={onCancel} onSubmit={handleDelete}>
+        <ModalDialog header="Delete meeting?" onCancel={onCancel} onSubmit={handleDelete} submitText="Yes, delete">
             <p>Are you sure you want to delete this meeting?</p>
         </ModalDialog>
     );
