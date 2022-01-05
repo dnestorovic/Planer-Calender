@@ -1,6 +1,9 @@
 // apps design
+@import "/src/Apps/OverviewPage/ln-overview-page";
 @import "/src/Apps/Calender/components/Banner/ln-banner";
+@import "/src/Apps/Calender/components/Login/ln-login";
 @import "/src/Apps/Calender/components/Calender/ln-calender";
+@import "/src/Apps/Reports/ln-reports";
 
 // app components design
 @import "/src/Apps/Calender/components/Calender/components/CalenderTable/ln-calender-table";
@@ -12,6 +15,7 @@
 @import "/src/components/Navigation/ln-navigation";
 @import "/src/components/Tag/ln-tag";
 @import "/src/components/Modals/ln-modal-dialog";
+@import "/src/components/Menu/ln-actions-menu";
 
 
 // colors
