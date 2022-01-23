@@ -1,5 +1,5 @@
 import React from 'react';
-import ActionsMenu from '../../components/Menu/ActionsMenu';
+import ActionsMenu from '../Menu/ActionsMenu';
 
 const OverviewPage: React.FC = ({ children }) => {
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import OverviewPage from '../OverviewPage/OverviewPage';
+import OverviewPage from '../../components/OverviewPage/OverviewPage';
 
 import { ResponsiveLine, Serie } from '@nivo/line';
 import { useMount } from 'react-use';
@@ -17,6 +17,7 @@ const Reports = () => {
     return (
         <OverviewPage>
             <div className="ln-reports">
+                <header>Tasks per month</header>
                 <ResponsiveLine
                     data={yearData}
                     colors={['rgb(255, 140, 18)']}
@@ -76,6 +77,7 @@ const Reports = () => {
                 />
             </div>
             <div className="ln-reports">
+                <header>Tasks per day</header>
                 <ResponsiveLine
                     data={monthData}
                     colors={['rgb(4, 94, 135)']}

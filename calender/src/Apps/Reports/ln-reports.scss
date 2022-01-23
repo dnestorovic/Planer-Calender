@@ -3,5 +3,15 @@
   flex-direction: column;
 
   height: 40vh;
+  margin-bottom: 50px;
 
+  header {
+    margin-left: 50px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+    font-size: 25px;
+    color: $primary-blue;
+  }
 }

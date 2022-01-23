@@ -29,7 +29,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
         return () => {
             domRoot && domRoot.removeChild(modalRoot);
         };
-    }, []);
+    }, [domRoot, modalRoot]);
 
     const modal = () => {
         return (

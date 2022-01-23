@@ -1,4 +1,4 @@
-@import "src/design/colors";
+@import "../../design/colors";
 .ln-login {
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   height: 100vh;
 
   .lnp-login-image {
-    background-image: url("../../../../../public/assets/login-background.jpg");
+    background-image: url("../../../public/assets/login-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: -300px;

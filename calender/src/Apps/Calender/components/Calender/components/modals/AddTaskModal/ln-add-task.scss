@@ -1,6 +1,5 @@
 .lnc-add-task {
 
-
   .lnp-input-field {
     display: flex;
     flex-direction: row;
@@ -42,6 +41,21 @@
       resize: none;
     }
 
+    select {
+      width: 200px;
+      min-width: 150px;
+      background: none;
+
+      border: none;
+      border-bottom: 1px solid $primary-orange;
+
+      color: white;
+    }
+
+    option {
+      background: $primary-blue;
+    }
+
     textarea::placeholder {
       color: white;
     }
@@ -62,6 +76,22 @@
         margin-left: 3px;
         margin-right: 3px;
       }
+
+    }
+
+    .lnp-field {
+        display: flex;
+        flex-direction: column;
+
+        .lnm-error-message {
+            margin-top: 5px;
+            width: 100%;
+            text-align: end;
+
+            font-size: 13px;
+            font-weight: 700;
+            color: $secondary-red;
+        }
 
     }
 

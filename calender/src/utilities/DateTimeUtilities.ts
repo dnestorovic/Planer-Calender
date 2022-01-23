@@ -5,11 +5,11 @@ export const getMonthFromNumber = (month: number): Months => {
 };
 
 export const getNextMonthNumber = (currentMonth: number): number => {
-    return currentMonth === 11 ? 0 : currentMonth + 1;
+    return currentMonth === 11 ? 11 : currentMonth + 1;
 };
 
 export const getPreviousMonthNumber = (currentMonth: number): number => {
-    return currentMonth === 0 ? 11 : currentMonth - 1;
+    return currentMonth === 0 ? 0 : currentMonth - 1;
 };
 
 export const getNextDayNumber = (day: number): number => {

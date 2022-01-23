@@ -12,8 +12,15 @@ type AddTaskProps = {
     onSave?: () => void;
 };
 
+type FormErrorType = {
+    shortDescription?: string;
+    description?: string;
+    place?: string;
+};
+
 const AddTaskModal: React.FC<AddTaskProps> = ({ onCancel, onSave, day, month, year }) => {
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [errorObject, setErrorObject] = useState<FormErrorType>({});
     const [formObject, setFormObject] = useState<MonthDataModel>({
         dayNumber: day,
         monthNumber: month,
@@ -21,7 +28,7 @@ const AddTaskModal: React.FC<AddTaskProps> = ({ onCancel, onSave, day, month, ye
         tasks: {
             shortDescription: '',
             description: '',
-            importance: 0,
+            importance: 1,
             place: '',
             time: '12:00'
         }
@@ -67,17 +74,42 @@ const AddTaskModal: React.FC<AddTaskProps> = ({ onCancel, onSave, day, month, ye
         setTime((prevState) => ({ ...prevState, minutes: value.target.value }));
     };
 
-    const handleImportance = (value: ChangeEvent<HTMLInputElement>) => {
+    const handleImportance = (value: ChangeEvent<HTMLSelectElement>) => {
         setFormObject((prevState) => ({
             ...prevState,
             tasks: {
                 ...prevState.tasks,
-                importance: value.target.value as unknown as number
+                importance: value?.target?.value as any as number
             }
         }));
     };
 
+    const isInvalidForm = (): boolean => {
+        const errors: FormErrorType = {};
+        const mandatoryMessage = 'This field is mandatory';
+
+        if (!formObject?.tasks?.shortDescription) {
+            errors.shortDescription = mandatoryMessage;
+        }
+
+        if (!formObject?.tasks?.description) {
+            errors.description = mandatoryMessage;
+        }
+
+        if (!formObject?.tasks?.place) {
+            errors.place = mandatoryMessage;
+        }
+
+        setErrorObject(errors);
+
+        return Object.values(errors).includes(mandatoryMessage);
+    };
+
     const handleSave = () => {
+        if (isInvalidForm()) {
+            return;
+        }
+
         setIsSaving(true);
         const data: MonthDataModel = { ...formObject };
         if (data.tasks?.time) {
@@ -106,15 +138,24 @@ const AddTaskModal: React.FC<AddTaskProps> = ({ onCancel, onSave, day, month, ye
             <div className="lnc-add-task">
                 <div className="lnp-input-field">
                     <span>Short description:</span>
-                    <input placeholder="Enter up to 15 characters..." onChange={handleShortDescription} />
+                    <div className="lnp-field">
+                        <input placeholder="Enter up to 15 characters..." onChange={handleShortDescription} />
+                        <span className="lnm-error-message">{errorObject?.shortDescription}</span>
+                    </div>
                 </div>
                 <div className="lnp-input-field">
                     <span>Description:</span>
-                    <textarea placeholder="Enter task description..." onChange={handleDescription} />
+                    <div className="lnp-field">
+                        <textarea placeholder="Enter task description..." onChange={handleDescription} />
+                        <span className="lnm-error-message">{errorObject?.description}</span>
+                    </div>
                 </div>
                 <div className="lnp-input-field">
                     <span>Place:</span>
-                    <input placeholder="Enter task place(optional)..." onChange={handlePlace} />
+                    <div className="lnp-field">
+                        <input placeholder="Enter task place(optional)..." onChange={handlePlace} />
+                        <span className="lnm-error-message">{errorObject?.place}</span>
+                    </div>
                 </div>
                 <div className="lnp-input-field lnm-time">
                     <span>Time:</span>
@@ -138,13 +179,12 @@ const AddTaskModal: React.FC<AddTaskProps> = ({ onCancel, onSave, day, month, ye
                 </div>
                 <div className="lnp-input-field">
                     <span>Importance:</span>
-                    <input
-                        type="number"
-                        min={1}
-                        max={30}
-                        placeholder="How important is this task..."
-                        onChange={handleImportance}
-                    />
+                    <select onChange={handleImportance} defaultValue={1}>
+                        <option value={1}>Low</option>
+                        <option value={6}>Medium</option>
+                        <option value={11}>High</option>
+                        <option value={16}>Very High</option>
+                    </select>
                 </div>
             </div>
         </ModalDialog>
